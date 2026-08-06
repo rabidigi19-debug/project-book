@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-gradient-to-b from-brand-950 via-brand-900 to-brand-800 text-paper"
+      className="relative flex min-h-dvh flex-col overflow-hidden bg-gradient-to-b from-brand-950 via-brand-900 to-brand-800 text-paper"
     >
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-brand-500/20 blur-3xl" />
@@ -20,12 +20,18 @@ export default function Hero() {
         <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-brand-400/10 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl gap-14 px-4 pt-28 pb-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:px-8 lg:pt-40 lg:pb-28">
+      <div className="relative mx-auto grid w-full flex-1 max-w-7xl gap-14 px-4 pt-28 pb-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:px-8 lg:pt-40 lg:pb-24">
         <div className="max-w-2xl">
           <span className="animate-fade-up inline-flex items-center gap-2 rounded-full border border-brass-400/30 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wide text-brass-300 uppercase">
             <span className="h-1.5 w-1.5 rounded-full bg-brass-400" />
             The reader&apos;s home since 2016
           </span>
+
+          <div
+            className="animate-fade-up mt-6 h-px w-16 bg-brass-400/80"
+            style={{ animationDelay: "40ms" }}
+            aria-hidden="true"
+          />
 
           <h1
             className="animate-fade-up mt-6 font-display text-4xl leading-[1.08] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl"
@@ -53,7 +59,7 @@ export default function Hero() {
           >
             <a
               href="#bestsellers"
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-brass-400 px-7 text-sm font-semibold text-brand-950 transition-all hover:bg-brass-300"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-brass-400 px-7 text-sm font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.03] hover:bg-brass-500"
             >
               Shop bestsellers
               <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

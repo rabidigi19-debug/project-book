@@ -48,7 +48,7 @@ export default function Membership() {
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <a
                     href="#newsletter"
-                    className="group inline-flex h-12 items-center gap-2 rounded-full bg-brass-400 px-7 text-sm font-semibold text-brand-950 transition-all hover:bg-brass-300"
+                    className="group inline-flex h-12 items-center gap-2 rounded-full bg-brass-400 px-7 text-sm font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.03] hover:bg-brass-500"
                   >
                     Start 30-day free trial
                     <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

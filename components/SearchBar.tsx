@@ -43,11 +43,7 @@ export default function SearchBar({
       />
       <button
         type="submit"
-        className={`h-10 shrink-0 rounded-full px-5 text-sm font-semibold transition-colors ${
-          dark
-            ? "bg-brass-400 text-brand-950 hover:bg-brass-300"
-            : "bg-brand-800 text-paper hover:bg-brand-700"
-        }`}
+        className="h-10 shrink-0 rounded-full bg-brass-400 px-5 text-sm font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.03] hover:bg-brass-500"
       >
         Search
       </button>

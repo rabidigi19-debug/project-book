@@ -11,7 +11,7 @@ export default function BookCard({ book }: { book: Book }) {
   const filledStars = Math.round(book.rating);
 
   return (
-    <article className="group flex flex-col rounded-2xl p-3 transition-all duration-200 hover:-translate-y-1 hover:bg-white hover:shadow-xl">
+    <article className="group flex flex-col rounded-2xl bg-white p-3 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
       <div className="relative">
         <BookCover
           title={book.title}

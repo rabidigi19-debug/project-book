@@ -32,7 +32,7 @@ export default function Categories() {
             <Reveal key={cat.name} delay={(i % 3) * 80}>
               <a
                 href="#bestsellers"
-                className="group flex items-center gap-4 rounded-2xl border border-sand/80 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-brand-200 hover:shadow-lg"
+                className="group flex items-center gap-4 rounded-2xl border border-sand/80 bg-white p-4 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:border-brand-200 hover:shadow-xl"
               >
                 <BookCover
                   title={cat.name}

@@ -96,11 +96,7 @@ export default function Header() {
           </a>
           <a
             href="#membership"
-            className={`hidden h-11 items-center rounded-full px-5 text-sm font-semibold transition-all sm:flex ${
-              overHero
-                ? "bg-brass-400 text-brand-950 hover:bg-brass-300"
-                : "bg-brand-800 text-paper hover:bg-brand-700"
-            }`}
+            className={`hidden h-11 items-center rounded-full bg-brass-400 px-5 text-sm font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.03] hover:bg-brass-500 sm:flex`}
           >
             Sign in
           </a>
@@ -133,7 +129,7 @@ export default function Header() {
             <a
               href="#membership"
               onClick={() => setOpen(false)}
-              className="mt-2 flex h-12 items-center justify-center rounded-xl bg-brand-800 px-5 text-base font-semibold text-paper"
+              className="mt-2 flex h-12 items-center justify-center rounded-full bg-brass-400 px-5 text-base font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.02] hover:bg-brass-500"
             >
               Sign in
             </a>

@@ -65,7 +65,7 @@ export default function Newsletter() {
                 />
                 <button
                   type="submit"
-                  className="h-12 shrink-0 rounded-full bg-brand-800 px-7 text-sm font-semibold text-paper transition-colors hover:bg-brand-700"
+                  className="h-12 shrink-0 rounded-full bg-brass-400 px-7 text-sm font-semibold text-brand-950 transition-all duration-300 hover:scale-[1.03] hover:bg-brass-500"
                 >
                   Subscribe
                 </button>
