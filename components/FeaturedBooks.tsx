@@ -5,7 +5,7 @@ import { books } from "@/lib/books";
 
 export default function FeaturedBooks() {
   return (
-    <section id="bestsellers" className="scroll-mt-24 bg-cream py-16 sm:py-20 lg:py-24">
+    <section id="bestsellers" className="scroll-mt-24 bg-cream py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">

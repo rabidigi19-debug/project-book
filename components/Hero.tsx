@@ -73,23 +73,23 @@ export default function Hero() {
           </div>
 
           <dl
-            className="animate-fade-up mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-7"
+            className="animate-fade-up mt-14 flex flex-wrap gap-x-12 gap-y-6 border-t border-white/10 pt-8"
             style={{ animationDelay: "400ms" }}
           >
             {stats.map((s) => (
               <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
-                <dd className="font-display text-2xl font-bold text-paper">
+                <dd className="font-display text-3xl font-bold text-paper sm:text-4xl">
                   {s.value === "4.9" ? (
-                    <span className="inline-flex items-center gap-1.5">
+                    <span className="inline-flex items-center gap-2">
                       {s.value}
-                      <IconStar className="h-4 w-4 text-brass-400" />
+                      <IconStar className="h-5 w-5 text-brass-400" />
                     </span>
                   ) : (
                     s.value
                   )}
                 </dd>
-                <dd className="mt-1 text-xs tracking-wide text-paper/55 uppercase">
+                <dd className="mt-2 text-xs tracking-[0.18em] text-paper/55 uppercase">
                   {s.label}
                 </dd>
               </div>

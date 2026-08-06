@@ -5,7 +5,7 @@ import { categories } from "@/lib/books";
 
 export default function Categories() {
   return (
-    <section id="categories" className="scroll-mt-24 py-16 sm:py-20 lg:py-24">
+    <section id="categories" className="scroll-mt-24 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">

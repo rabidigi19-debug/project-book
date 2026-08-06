@@ -11,7 +11,7 @@ const perks = [
 
 export default function Membership() {
   return (
-    <section id="membership" className="scroll-mt-24 pb-16 sm:pb-20 lg:pb-24">
+    <section id="membership" className="scroll-mt-24 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 px-6 py-12 text-paper shadow-2xl sm:px-10 lg:px-14 lg:py-16">

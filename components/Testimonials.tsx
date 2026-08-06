@@ -30,7 +30,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="scroll-mt-24 bg-cream py-16 sm:py-20 lg:py-24">
+    <section id="reviews" className="scroll-mt-24 bg-cream py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">

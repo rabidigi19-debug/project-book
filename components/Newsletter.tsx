@@ -22,7 +22,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="scroll-mt-24 pb-16 sm:pb-20 lg:pb-24">
+    <section id="newsletter" className="scroll-mt-24 py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="rounded-3xl border border-sand/80 bg-white px-6 py-12 shadow-sm sm:px-10 lg:px-14">
