@@ -50,8 +50,12 @@ export default function Testimonials() {
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={(i % 3) * 80}>
-              <figure className="flex h-full flex-col rounded-2xl border border-sand/80 bg-white p-6 shadow-sm">
-                <IconQuote className="h-7 w-7 text-brass-400" />
+              <figure className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-sand/70 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-200/70 hover:shadow-lg">
+                <IconQuote
+                  className="absolute -top-3 right-4 h-24 w-24 text-brass-300/20 transition-colors duration-300 group-hover:text-brass-300/30"
+                  aria-hidden="true"
+                />
+                <IconQuote className="h-8 w-8 text-brass-500" aria-hidden="true" />
                 <div className="mt-3 flex items-center gap-0.5 text-brass-500" aria-label="5 out of 5 stars">
                   {Array.from({ length: 5 }).map((_, s) => (
                     <IconStar key={s} className="h-4 w-4" />
@@ -62,14 +66,14 @@ export default function Testimonials() {
                 </blockquote>
                 <figcaption className="mt-6 flex items-center gap-3 border-t border-sand/70 pt-5">
                   <span
-                    className={`flex h-11 w-11 items-center justify-center rounded-full ${t.color} font-display text-sm font-bold text-paper`}
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${t.color} font-display text-sm font-bold text-paper shadow-sm ring-2 ring-white`}
                     aria-hidden="true"
                   >
                     {t.initials}
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-ink">{t.name}</p>
-                    <p className="text-xs text-fog">{t.role}</p>
+                    <p className="mt-0.5 text-xs text-fog">{t.role}</p>
                   </div>
                 </figcaption>
               </figure>
