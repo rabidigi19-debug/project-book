@@ -6,10 +6,30 @@ const SIZES: Record<
   Size,
   { label: string; title: string; author: string; pad: string }
 > = {
-  sm: { label: "text-[7px]", title: "text-sm", author: "text-[9px]", pad: "px-3 py-3" },
-  md: { label: "text-[8px]", title: "text-base", author: "text-[10px]", pad: "px-4 py-4" },
-  lg: { label: "text-[10px]", title: "text-2xl", author: "text-xs", pad: "px-5 py-5" },
-  xl: { label: "text-[11px]", title: "text-3xl", author: "text-sm", pad: "px-6 py-6" },
+  sm: {
+    label: "text-[5px] tracking-[0.08em] whitespace-nowrap",
+    title: "text-[8px] leading-tight",
+    author: "text-[6px] tracking-[0.12em]",
+    pad: "px-1 py-3",
+  },
+  md: {
+    label: "text-[8px] tracking-[0.28em]",
+    title: "text-base",
+    author: "text-[10px] tracking-[0.18em]",
+    pad: "px-4 py-4",
+  },
+  lg: {
+    label: "text-[10px] tracking-[0.28em]",
+    title: "text-2xl",
+    author: "text-xs tracking-[0.18em]",
+    pad: "px-5 py-5",
+  },
+  xl: {
+    label: "text-[11px] tracking-[0.28em]",
+    title: "text-3xl",
+    author: "text-sm tracking-[0.18em]",
+    pad: "px-6 py-6",
+  },
 };
 
 export default function BookCover({
@@ -48,10 +68,17 @@ export default function BookCover({
           background: "radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,0.14), transparent 55%)",
         }}
       >
-        <div className={`flex items-center justify-between ${t.label} font-medium tracking-[0.28em] uppercase`} style={{ color: s.accent }}>
-          <span>Booknest</span>
-          <span>EST. 2016</span>
-        </div>
+        {size === "sm" ? (
+          <div className={`flex flex-col items-center gap-0.5 ${t.label} font-medium uppercase`} style={{ color: s.accent }}>
+            <span>Booknest</span>
+            <span className="text-[3.5px] tracking-[0.12em] opacity-60">EST. 2016</span>
+          </div>
+        ) : (
+          <div className={`flex items-center justify-between gap-2 ${t.label} font-medium uppercase`} style={{ color: s.accent }}>
+            <span>Booknest</span>
+            <span className="pr-1.5 opacity-70">EST. 2016</span>
+          </div>
+        )}
         <div className="text-center">
           <p
             className={`font-display leading-tight font-semibold ${t.title}`}
@@ -65,7 +92,7 @@ export default function BookCover({
           />
         </div>
         <p
-          className={`text-center ${t.author} tracking-[0.18em] uppercase`}
+          className={`text-center ${t.author} uppercase`}
           style={{ color: "rgba(255,255,255,0.85)" }}
         >
           {author}
