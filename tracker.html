@@ -1,0 +1,209 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>BookNest Account Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one dark ledger page. Summary strip on top, filter row, account table, add-account form below.
+   Palette follows the BookNest storefront: black ground, gold accent. Single deliberate dark look. */
+:root{
+  --bg:#0e0d0b; --panel:#171612; --line:#2c2a22; --fg:#efe9d8; --muted:#a39d8b;
+  --gold:#d4a73a; --gold-ink:#1a1405;
+  --ok:#7fc58a; --ok-bg:#16291a; --warn:#e6b54a; --warn-bg:#2d2410; --bad:#f08a78; --bad-bg:#331a15;
+  --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 var(--body);padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:6px}
+h1{font:600 30px/1.15 var(--display);margin:0;text-wrap:balance}
+h1 span{color:var(--gold)}
+.sub{color:var(--muted);max-width:62ch;margin:0}
+.sample{align-self:flex-start;border:1px solid var(--gold);color:var(--gold);padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.tile .k{color:var(--muted);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.tile .v{font:600 22px/1.3 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.tile.bad .v{color:var(--bad)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;cursor:pointer}
+.chip{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:99px;padding:6px 14px}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:4px}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.tablebox{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:860px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right}
+.acc strong{display:block}
+.acc small{color:var(--muted)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.hint{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.hint.due{color:var(--warn)}
+.pay{display:flex;gap:6px}
+.pay input{width:92px}
+input,textarea{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font:inherit;min-width:0;width:100%}
+.btn{background:var(--gold);color:var(--gold-ink);border:0;border-radius:6px;padding:7px 14px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:500}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+form{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px}
+form h2{font:600 18px/1.3 var(--display);margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px;min-width:0}
+.err{color:var(--bad);min-height:1.2em;margin:0}
+footer{color:var(--muted);font-size:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--gold);color:var(--gold-ink);padding:8px 16px;border-radius:8px;font-weight:600}
+@media (prefers-reduced-motion:no-preference){.tile,.tablebox{transition:border-color .2s}.tile:hover{border-color:var(--gold)}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="sample">Sample data &middot; not real customers</span>
+    <h1>BookNest <span>Account Tracker</span></h1>
+    <p class="sub">Tracks bulk and membership accounts for an online bookstore: who has been invoiced, what has been paid, and who needs a follow-up call today. Record a payment and the balance, status and summary update at once.</p>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="Summary"></section>
+
+  <div class="bar">
+    <div class="chips" id="chips" role="group" aria-label="Filter by status"></div>
+    <button class="link" id="reset" type="button">Reset sample data</button>
+  </div>
+
+  <div class="tablebox"><table>
+    <thead><tr>
+      <th>Account</th><th>Invoice</th><th class="num">Amount</th><th class="num">Balance</th>
+      <th>Status</th><th>Next follow-up</th><th>Record payment</th><th></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <form id="addForm" novalidate>
+    <h2>Add an account</h2>
+    <div class="grid">
+      <label for="fName">Account name<input id="fName" placeholder="e.g. Greenfield School"></label>
+      <label for="fService">Service<input id="fService" placeholder="e.g. Bulk textbook order"></label>
+      <label for="fInv">Invoice no.<input id="fInv" placeholder="INV-007"></label>
+      <label for="fAmt">Amount (PKR)<input id="fAmt" type="number" min="1" inputmode="numeric" placeholder="50000"></label>
+      <label for="fDue">Due date<input id="fDue" type="date"></label>
+      <label for="fFollow">Next follow-up<input id="fFollow" type="date"></label>
+    </div>
+    <label for="fNotes">Notes<textarea id="fNotes" rows="2" placeholder="Anything the next person should know"></textarea></label>
+    <p class="err" id="err" role="alert"></p>
+    <div><button class="btn" type="submit">Add account</button></div>
+  </form>
+
+  <footer>Sample accounts and amounts are made up to show the workflow. Changes stay in this browser only.</footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+  var KEY='booknest-account-tracker-v1';
+  var DAY=86400000;
+  function today(){var d=new Date();d.setHours(0,0,0,0);return d}
+  function iso(d){var m=d.getMonth()+1,dd=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(dd<10?'0':'')+dd}
+  function off(n){return iso(new Date(today().getTime()+n*DAY))}
+  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  function days(s){return Math.round((parse(s)-today())/DAY)}
+  function pkr(n){return 'PKR '+Math.round(n).toLocaleString('en-PK')}
+  function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
+  function fmt(s){return parse(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
+
+  function seed(){return [
+    {id:1,name:'City School',service:'Bulk textbook order',inv:'INV-001',amount:120000,received:120000,due:off(-60),follow:off(14),notes:'Paid on time; delivered.'},
+    {id:2,name:'Corporate Office',service:'Corporate gift books',inv:'INV-002',amount:85000,received:40000,due:off(-45),follow:off(2),notes:'Partial payment. Second shipment on hold until balance is cleared.'},
+    {id:3,name:'Public Library',service:'Library restock order',inv:'INV-003',amount:60000,received:0,due:off(-30),follow:off(0),notes:'Delivered. Reminder email sent, call pending.'},
+    {id:4,name:'Tuition Academy',service:'Course reading lists',inv:'INV-004',amount:45000,received:0,due:off(6),follow:off(3),notes:'Order dispatched; not yet due.'},
+    {id:5,name:'Book Club',service:'Booknest Plus membership (group)',inv:'INV-005',amount:95000,received:95000,due:off(11),follow:off(20),notes:'Paid. Membership renewal offer due next month.'},
+    {id:6,name:'Reading Cafe',service:'Monthly book supply',inv:'INV-006',amount:70000,received:20000,due:off(-25),follow:off(-1),notes:'Escalate to account manager if still unpaid.'}
+  ]}
+  var data,filter='All',nextId=100;
+  try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(Array.isArray(p))data=p}}catch(e){}
+  if(!data)data=seed();
+  data.forEach(function(a){if(a.id>=nextId)nextId=a.id+1});
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+
+  function status(a){
+    var bal=a.amount-a.received;
+    if(bal<=0)return {k:'Paid',cls:'ok',hint:''};
+    var d=days(a.due);
+    if(d<0)return {k:'Overdue',cls:'bad',hint:Math.abs(d)+(Math.abs(d)===1?' day':' days')+' late'};
+    return {k:'Pending',cls:'warn',hint:d===0?'due today':'due in '+d+(d===1?' day':' days')};
+  }
+
+  function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2200)}
+
+  function render(){
+    var billed=0,got=0,overdue=0,overdueAmt=0;
+    data.forEach(function(a){billed+=a.amount;got+=a.received;var s=status(a);if(s.k==='Overdue'){overdue++;overdueAmt+=a.amount-a.received}});
+    var rate=billed?Math.round(got/billed*1000)/10:0;
+    document.getElementById('tiles').innerHTML=
+      tile('Total billed',pkr(billed))+tile('Received',pkr(got))+tile('Outstanding',pkr(billed-got))+
+      tile('Collection rate',rate+'%')+tile('Overdue',overdue+' invoice'+(overdue===1?'':'s')+' &middot; '+pkr(overdueAmt),overdue>0);
+
+    var counts={All:data.length,Overdue:0,Pending:0,Paid:0};
+    data.forEach(function(a){counts[status(a).k]++});
+    document.getElementById('chips').innerHTML=['All','Overdue','Pending','Paid'].map(function(f){
+      return '<button type="button" class="chip" data-f="'+f+'" aria-pressed="'+(filter===f)+'">'+f+' ('+counts[f]+')</button>'}).join('');
+
+    var list=data.filter(function(a){return filter==='All'||status(a).k===filter});
+    list.sort(function(a,b){var sa=status(a).k==='Paid',sb=status(b).k==='Paid';if(sa!==sb)return sa?1:-1;return parse(a.follow)-parse(b.follow)});
+    var tb=document.getElementById('rows');
+    if(!list.length){tb.innerHTML='<tr><td colspan="8" class="empty">No accounts in this view.</td></tr>';return}
+    tb.innerHTML=list.map(function(a){
+      var s=status(a),bal=a.amount-a.received,fd=days(a.follow);
+      var fh=s.k==='Paid'?'':(fd<0?'follow-up missed':(fd===0?'follow up today':''));
+      return '<tr>'+
+        '<td class="acc"><strong>'+esc(a.name)+'</strong><small>'+esc(a.service)+'</small>'+(a.notes?'<span class="hint">'+esc(a.notes)+'</span>':'')+'</td>'+
+        '<td>'+esc(a.inv)+'<span class="hint">due '+fmt(a.due)+'</span></td>'+
+        '<td class="num">'+pkr(a.amount)+'</td>'+
+        '<td class="num">'+pkr(Math.max(bal,0))+'</td>'+
+        '<td><span class="pill '+s.cls+'">'+s.k+'</span>'+(s.hint?'<span class="hint">'+s.hint+'</span>':'')+'</td>'+
+        '<td>'+fmt(a.follow)+(fh?'<span class="hint due">'+fh+'</span>':'')+'</td>'+
+        '<td>'+(bal>0?'<div class="pay"><input type="number" min="1" inputmode="numeric" aria-label="Payment amount for '+esc(a.name)+'" id="p'+a.id+'" placeholder="PKR"><button class="btn" type="button" data-pay="'+a.id+'">Record</button></div>':'<span class="hint">Settled</span>')+'</td>'+
+        '<td><button class="btn ghost" type="button" data-del="'+a.id+'" aria-label="Remove '+esc(a.name)+'">Remove</button></td>'+
+        '</tr>'}).join('');
+  }
+  function tile(k,v,bad){return '<div class="tile'+(bad?' bad':'')+'"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'}
+
+  document.getElementById('chips').addEventListener('click',function(e){
+    var f=e.target.getAttribute&&e.target.getAttribute('data-f');if(f){filter=f;render()}});
+  document.getElementById('rows').addEventListener('click',function(e){
+    var pay=e.target.getAttribute('data-pay'),del=e.target.getAttribute('data-del');
+    if(pay){
+      var inp=document.getElementById('p'+pay),v=parseFloat(inp.value);
+      if(!(v>0)){toast('Enter a payment amount first');inp.focus();return}
+      data.forEach(function(a){if(String(a.id)===pay){a.received=Math.min(a.amount,a.received+v)}});
+      save();render();toast('Payment recorded');
+    }else if(del){
+      data=data.filter(function(a){return String(a.id)!==del});save();render();toast('Account removed');
+    }
+  });
+  document.getElementById('reset').addEventListener('click',function(){data=seed();filter='All';save();render();toast('Sample data restored')});
+
+  document.getElementById('fDue').value=off(15);
+  document.getElementById('fFollow').value=off(3);
+  document.getElementById('addForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('fName').value.trim(),amt=parseFloat(document.getElementById('fAmt').value),
+        due=document.getElementById('fDue').value,fol=document.getElementById('fFollow').value,err=document.getElementById('err');
+    if(!name){err.textContent='Enter an account name.';return}
+    if(!(amt>0)){err.textContent='Enter an invoice amount above zero.';return}
+    if(!due||!fol){err.textContent='Choose a due date and a follow-up date.';return}
+    err.textContent='';
+    data.push({id:nextId++,name:name,service:document.getElementById('fService').value.trim(),inv:document.getElementById('fInv').value.trim()||('INV-'+String(nextId).padStart(3,'0')),amount:amt,received:0,due:due,follow:fol,notes:document.getElementById('fNotes').value.trim()});
+    save();e.target.reset();document.getElementById('fDue').value=off(15);document.getElementById('fFollow').value=off(3);
+    render();toast('Account added');
+  });
+  render();
+})();
+</script>
+
+</body></html>
